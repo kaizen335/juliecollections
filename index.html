@@ -20,6 +20,25 @@
         .card-shadow:hover {
             transform: translateY(-4px);
         }
+        /* Modal Overlay Style */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.9);
+            display: none; /* Initially hidden */
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            padding: 1rem;
+        }
+        .modal-content img {
+            max-height: 90vh; /* Max height for mobile/desktop view */
+            max-width: 90vw; /* Max width for mobile/desktop view */
+            object-fit: contain;
+        }
     </style>
 </head>
 <body>
@@ -56,68 +75,83 @@
             </div>
         </section>
 
-        <!-- Portfolio Work Section -->
+        <!-- Portfolio Work Section (Refactored for Tabs) -->
         <section id="portfolio" class="mb-12">
-            <h2 class="text-3xl font-extrabold text-indigo-700 mb-8 text-center">Featured Work</h2>
+            <h2 class="text-3xl font-extrabold text-indigo-700 mb-8 text-center">Featured Work Gallery</h2>
             
-            <!-- Responsive Grid for Portfolio Items -->
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                
-                <!-- Project 1: Garment Grading Mastery -->
-                <div class="bg-white rounded-xl overflow-hidden card-shadow">
-                    <!-- Placeholder Image - REPLACE with actual image URL -->
-                    <img src="https://placehold.co/600x400/364E94/ffffff?text=Grading+Mastery" 
-                         alt="Example of precision pattern grading work" 
-                         class="w-full h-48 object-cover">
-                    <div class="p-5">
-                        <h3 class="text-xl font-semibold text-gray-800 mb-2">Bespoke Collection & Grading</h3>
-                        <p class="text-gray-600 text-sm">A project showcasing technical skill in converting base patterns into a full range of sizes using specialized grading techniques for optimal fit.</p>
-                    </div>
-                </div>
+            <!-- Tab Navigation -->
+            <div class="flex justify-center border-b border-gray-200 mb-8">
+                <button onclick="showGallery('brocade')" id="tab-brocade" class="tab-button py-3 px-6 text-lg font-medium border-b-2 border-transparent hover:border-indigo-500 transition duration-300 text-gray-500 hover:text-indigo-600 focus:outline-none" data-gallery="brocade">
+                    Brocade Fits
+                </button>
+                <button onclick="showGallery('custom')" id="tab-custom" class="tab-button py-3 px-6 text-lg font-medium border-b-2 border-transparent hover:border-indigo-500 transition duration-300 text-gray-500 hover:text-indigo-600 focus:outline-none" data-gallery="custom">
+                    Custom Made Outfits
+                </button>
+                <button onclick="showGallery('ankaras')" id="tab-ankaras" class="tab-button py-3 px-6 text-lg font-medium border-b-2 border-transparent hover:border-indigo-500 transition duration-300 text-gray-500 hover:text-indigo-600 focus:outline-none" data-gallery="ankaras">
+                    Ankaras
+                </button>
+            </div>
 
-                <!-- Project 2: Tailoring Expertise -->
-                <div class="bg-white rounded-xl overflow-hidden card-shadow">
-                    <!-- Placeholder Image - REPLACE with actual image URL -->
-                    <img src="https://placehold.co/600x400/8B5CF6/ffffff?text=Tailoring+Detail" 
-                         alt="Example of detailed tailoring and finishing" 
-                         class="w-full h-48 object-cover">
-                    <div class="p-5">
-                        <h3 class="text-xl font-semibold text-gray-800 mb-2">Precision Tailoring & Finishing</h3>
-                        <p class="text-gray-600 text-sm">Focus on high-standard construction, complex seam work, and durable finishing techniques, demonstrating expertise gained at Yimvula Apparels.</p>
-                    </div>
+            <!-- Gallery Content Containers -->
+            
+            <!-- Brocade Fits Gallery -->
+            <div id="gallery-brocade" class="gallery-content grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4" style="display: grid;">
+                <!-- Brocade Item 1. NOTE: Replace placehold.co URLs with actual image paths -->
+                <div class="bg-white rounded-lg overflow-hidden card-shadow cursor-pointer" onclick="openModal('https://placehold.co/800x1200/364E94/ffffff?text=Brocade+Look+1')">
+                    <img src="https://placehold.co/400x600/364E94/ffffff?text=Brocade+1" 
+                         alt="Brocade Fit 1" 
+                         class="w-full h-48 md:h-64 object-cover transform hover:scale-105 transition duration-500">
                 </div>
-
-                <!-- Project 3: Instructional Design / Concept -->
-                <div class="bg-white rounded-xl overflow-hidden card-shadow">
-                    <!-- Placeholder Image - REPLACE with actual image URL -->
-                    <img src="https://placehold.co/600x400/1D4ED8/ffffff?text=Interior+Concepts" 
-                         alt="Example of an interior design concept" 
-                         class="w-full h-48 object-cover">
-                    <div class="p-5">
-                        <h3 class="text-xl font-semibold text-gray-800 mb-2">Interior Decor Concepts</h3>
-                        <p class="text-gray-600 text-sm">Creative output from the Diploma, applying principles of color theory, spatial planning, and textile selection for modern living spaces.</p>
-                    </div>
+                <!-- Brocade Item 2 -->
+                <div class="bg-white rounded-lg overflow-hidden card-shadow cursor-pointer" onclick="openModal('https://placehold.co/1200x800/2563EB/ffffff?text=Brocade+Look+2')">
+                    <img src="https://placehold.co/400x600/2563EB/ffffff?text=Brocade+2" 
+                         alt="Brocade Fit 2" 
+                         class="w-full h-48 md:h-64 object-cover transform hover:scale-105 transition duration-500">
                 </div>
-
-                <!-- Project 4: Tutor/Mentorship Role -->
-                <div class="bg-white rounded-xl overflow-hidden card-shadow">
-                    <!-- Placeholder Image - REPLACE with actual image URL -->
-                    <img src="https://placehold.co/600x400/6D28D9/ffffff?text=Fashion+Instruction" 
-                         alt="Image representing teaching and mentorship" 
-                         class="w-full h-48 object-cover">
-                    <div class="p-5">
-                        <h3 class="text-xl font-semibold text-gray-800 mb-2">Instructional Portfolio</h3>
-                        <p class="text-gray-600 text-sm">Documentation of teaching materials and student work results from the period as a Fashion Design Tutor at Overflow College.</p>
-                    </div>
+                <!-- Brocade Item 3 -->
+                <div class="bg-white rounded-lg overflow-hidden card-shadow cursor-pointer" onclick="openModal('https://placehold.co/800x800/1D4ED8/ffffff?text=Brocade+Look+3')">
+                    <img src="https://placehold.co/400x600/1D4ED8/ffffff?text=Brocade+3" 
+                         alt="Brocade Fit 3" 
+                         class="w-full h-48 md:h-64 object-cover transform hover:scale-105 transition duration-500">
                 </div>
+            </div>
 
+            <!-- Custom Made Outfits Gallery -->
+            <div id="gallery-custom" class="gallery-content grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4" style="display: none;">
+                <!-- Custom Item 1 -->
+                <div class="bg-white rounded-lg overflow-hidden card-shadow cursor-pointer" onclick="openModal('https://placehold.co/1000x1000/6D28D9/ffffff?text=Custom+Look+1')">
+                    <img src="https://placehold.co/400x600/6D28D9/ffffff?text=Custom+1" 
+                         alt="Custom Outfit 1" 
+                         class="w-full h-48 md:h-64 object-cover transform hover:scale-105 transition duration-500">
+                </div>
+                <!-- Custom Item 2 -->
+                <div class="bg-white rounded-lg overflow-hidden card-shadow cursor-pointer" onclick="openModal('https://placehold.co/800x1100/4F46E5/ffffff?text=Custom+Look+2')">
+                    <img src="https://placehold.co/400x600/4F46E5/ffffff?text=Custom+2" 
+                         alt="Custom Outfit 2" 
+                         class="w-full h-48 md:h-64 object-cover transform hover:scale-105 transition duration-500">
+                </div>
             </div>
             
-            <!-- Secondary CTA - View All -->
-            <div class="text-center mt-12">
-                <a href="#contact" class="bg-indigo-500 text-white font-semibold py-3 px-8 rounded-lg hover:bg-indigo-700 transition duration-300 shadow-lg transform hover:scale-105">
-                    View More Work (Contact for Full Gallery)
-                </a>
+            <!-- Ankaras Gallery -->
+            <div id="gallery-ankaras" class="gallery-content grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4" style="display: none;">
+                <!-- Ankara Item 1 -->
+                <div class="bg-white rounded-lg overflow-hidden card-shadow cursor-pointer" onclick="openModal('https://placehold.co/800x1200/8B5CF6/ffffff?text=Ankara+Look+1')">
+                    <img src="https://placehold.co/400x600/8B5CF6/ffffff?text=Ankara+1" 
+                         alt="Ankara Design 1" 
+                         class="w-full h-48 md:h-64 object-cover transform hover:scale-105 transition duration-500">
+                </div>
+                <!-- Ankara Item 2 -->
+                <div class="bg-white rounded-lg overflow-hidden card-shadow cursor-pointer" onclick="openModal('https://placehold.co/1200x800/A78BFA/ffffff?text=Ankara+Look+2')">
+                    <img src="https://placehold.co/400x600/A78BFA/ffffff?text=Ankara+2" 
+                         alt="Ankara Design 2" 
+                         class="w-full h-48 md:h-64 object-cover transform hover:scale-105 transition duration-500">
+                </div>
+                <!-- Ankara Item 3 -->
+                <div class="bg-white rounded-lg overflow-hidden card-shadow cursor-pointer" onclick="openModal('https://placehold.co/800x1000/4C1D95/ffffff?text=Ankara+Look+3')">
+                    <img src="https://placehold.co/400x600/4C1D95/ffffff?text=Ankara+3" 
+                         alt="Ankara Design 3" 
+                         class="w-full h-48 md:h-64 object-cover transform hover:scale-105 transition duration-500">
+                </div>
             </div>
         </section>
 
@@ -160,5 +194,94 @@
         </div>
     </footer>
 
+    <!-- Image Modal/Lightbox Structure -->
+    <div id="imageModal" class="modal-overlay" onclick="closeModal(event)">
+        <div class="relative modal-content">
+            <img id="modalImage" src="" alt="Full size portfolio image" class="rounded-lg shadow-2xl">
+            <!-- Close Button (X) -->
+            <button onclick="closeModal(event)" 
+                    class="absolute top-4 right-4 text-white bg-red-600 p-2 rounded-full hover:bg-red-700 transition duration-300 focus:outline-none"
+                    aria-label="Close image viewer">
+                <!-- Lucide icon: X -->
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
+            </button>
+        </div>
+    </div>
+    
+    <!-- JavaScript for Interactivity (Tabs and Modal) -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // Initialize the first tab (Brocade Fits) as active
+            showGallery('brocade');
+        });
+
+        /**
+         * Function to switch between the portfolio galleries (tabs).
+         * @param {string} galleryId - The ID suffix of the gallery to show ('brocade', 'custom', or 'ankaras').
+         */
+        function showGallery(galleryId) {
+            // Hide all gallery content
+            document.querySelectorAll('.gallery-content').forEach(content => {
+                content.style.display = 'none';
+            });
+
+            // Deactivate all tabs
+            document.querySelectorAll('.tab-button').forEach(button => {
+                button.classList.remove('border-indigo-600', 'text-indigo-600');
+                button.classList.add('border-transparent', 'text-gray-500');
+            });
+
+            // Show the selected gallery content
+            const selectedContent = document.getElementById(`gallery-${galleryId}`);
+            if (selectedContent) {
+                 // Use 'grid' display to maintain responsiveness of gallery items
+                selectedContent.style.display = 'grid'; 
+            }
+
+            // Activate the selected tab
+            const selectedTab = document.getElementById(`tab-${galleryId}`);
+            if (selectedTab) {
+                selectedTab.classList.add('border-indigo-600', 'text-indigo-600');
+                selectedTab.classList.remove('border-transparent', 'text-gray-500');
+            }
+        }
+
+        /**
+         * Function to open the image modal/lightbox.
+         * @param {string} imageUrl - The URL of the image to display in the modal.
+         */
+        function openModal(imageUrl) {
+            const modal = document.getElementById('imageModal');
+            const modalImage = document.getElementById('modalImage');
+
+            modalImage.src = imageUrl;
+            modal.style.display = 'flex';
+            document.body.style.overflow = 'hidden'; // Prevent scrolling background
+        }
+
+        /**
+         * Function to close the image modal/lightbox.
+         * Allows closing by clicking the 'X' button or the dark overlay.
+         * @param {Event} event - The click event.
+         */
+        function closeModal(event) {
+            // Check if the click occurred on the modal-overlay itself or the close button
+            if (event.target.id === 'imageModal' || event.target.closest('button[aria-label="Close image viewer"]')) {
+                const modal = document.getElementById('imageModal');
+                modal.style.display = 'none';
+                document.body.style.overflow = ''; // Restore scrolling
+            }
+        }
+
+        // Add keyboard event listener for escape key to close modal
+        document.addEventListener('keydown', (e) => {
+            const modal = document.getElementById('imageModal');
+            if (e.key === 'Escape' && modal.style.display === 'flex') {
+                modal.style.display = 'none';
+                document.body.style.overflow = '';
+            }
+        });
+
+    </script>
 </body>
 </html>
